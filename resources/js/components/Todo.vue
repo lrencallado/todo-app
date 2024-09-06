@@ -12,12 +12,9 @@ const rules = ref([value => {
     return 'You must enter a value';
 }])
 const todosStore = useTodos();
+const { addTodo, fetchTodos, updateTodo, deleteTodo }  = todosStore;
 const { todos } = storeToRefs(todosStore);
 const currentTodo = ref(null);
-
-const fetchTodos = async() => {
-    await todosStore.fetchTodos();
-}
 
 const setCurrentTodoId = (selectedTodo) => {
     currentTodo.value = selectedTodo;
@@ -25,7 +22,7 @@ const setCurrentTodoId = (selectedTodo) => {
 }
 
 onMounted(() => {
-    todosStore.fetchTodos();
+    fetchTodos();
 })
 
 </script>
@@ -46,15 +43,15 @@ onMounted(() => {
                 <v-checkbox :label="todo.todo" @click="setCurrentTodoId(todo)"></v-checkbox>
             </template>
 
-            <v-form @submit.prevent="todosStore.addTodo(todo)">
+            <v-form @submit.prevent="addTodo(todo)">
                 <v-text-field
                     v-model="todo"
                     :rules="rules"
                     label="Todo"
                 ></v-text-field>
                 <v-btn class="mt-2" type="submit" block>Add</v-btn>
-                <v-btn class="mt-2" block @click="todosStore.updateTodo(currentTodo, todo)">Update</v-btn>
-                <v-btn class="mt-2" block @click="todosStore.deleteTodo(currentTodo)">Delete</v-btn>
+                <v-btn class="mt-2" block @click="updateTodo(currentTodo, todo)">Update</v-btn>
+                <v-btn class="mt-2" block @click="deleteTodo(currentTodo)">Delete</v-btn>
             </v-form>
         </v-card-text>
     </v-card>
