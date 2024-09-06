@@ -21,6 +21,10 @@ const setCurrentTodoId = (selectedTodo) => {
     todo.value = selectedTodo.todo
 }
 
+const onSelected = (selectedTodo) => {
+    todo.value = selectedTodo.todo
+}
+
 onMounted(() => {
     fetchTodos();
 })
@@ -39,8 +43,8 @@ onMounted(() => {
         </template>
 
         <v-card-text class="bg-surface-light pt-4">
-            <template v-for="todo in todos">
-                <v-checkbox :label="todo.todo" @click="setCurrentTodoId(todo)"></v-checkbox>
+            <template v-for="item in todos">
+                <v-checkbox v-model="todo" :value="item.todo" :label="item.todo" @click="setCurrentTodoId(item)" @change="onSelected(item)"></v-checkbox>
             </template>
 
             <v-form @submit.prevent="addTodo(todo)">
