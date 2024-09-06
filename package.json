@@ -12,6 +12,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@mdi/font": "^7.4.47",
         "@vue/cli-plugin-vuex": "^5.0.8",
         "pinia": "^2.2.2",
         "vuetify": "^3.7.1",
