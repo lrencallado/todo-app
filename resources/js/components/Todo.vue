@@ -1,16 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
 import { useTodos } from '../store';
 import { onMounted } from 'vue'
 import { storeToRefs } from "pinia";
 
-const todo = ref('')
+const todo = ref('');
+const todoCheckbox = ref('');
 const rules = ref([value => {
     if (value) return true;
 
     return 'You must enter a value';
-}])
+}]);
 const todosStore = useTodos();
 const { addTodo, fetchTodos, updateTodo, deleteTodo }  = todosStore;
 const { todos } = storeToRefs(todosStore);
@@ -19,15 +19,15 @@ const currentTodo = ref(null);
 const setCurrentTodoId = (selectedTodo) => {
     currentTodo.value = selectedTodo;
     todo.value = selectedTodo.todo
-}
+};
 
 const onSelected = (selectedTodo) => {
-    todo.value = selectedTodo.todo
-}
+    todoCheckbox.value = selectedTodo
+};
 
 onMounted(() => {
     fetchTodos();
-})
+});
 
 </script>
 
@@ -44,7 +44,7 @@ onMounted(() => {
 
         <v-card-text class="bg-surface-light pt-4">
             <template v-for="item in todos">
-                <v-checkbox v-model="todo" :value="item.todo" :label="item.todo" @click="setCurrentTodoId(item)" @change="onSelected(item)"></v-checkbox>
+                <v-checkbox v-model="todoCheckbox" :value="item.id" :label="item.todo" @click="setCurrentTodoId(item)" @change="onSelected(item.id)"></v-checkbox>
             </template>
 
             <v-form @submit.prevent="addTodo(todo)">
